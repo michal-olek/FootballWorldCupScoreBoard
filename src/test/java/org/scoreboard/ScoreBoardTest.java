@@ -50,6 +50,30 @@ class ScoreBoardTest {
         assertThrows(IllegalArgumentException.class, () -> sb.startGame("Germany", "Brazil"));
     }
 
+    @Test
+    public void testFinishGame() {
+        ScoreBoard sb = new ScoreBoard();
+        sb.startGame("Mexico", "Germany");
+        assertEquals(1, sb.scores.size());
+        sb.finishGame("Mexico", "Germany");
+        assertEquals(0, sb.scores.size());
+    }
+
+
+    @Test
+    public void testIncorrectlyFinishGame() {
+        ScoreBoard sb = new ScoreBoard();
+        sb.startGame("Mexico", "Germany");
+        assertThrows( IllegalArgumentException.class, () ->sb.finishGame("Germany", "Mexico"));
+        assertEquals(1, sb.scores.size());
+    }
+
+    @Test
+    public void testFinishNonExistingGame() {
+        ScoreBoard sb = new ScoreBoard();
+        assertThrows(IllegalArgumentException.class, () -> sb.finishGame("Mexico", "Germany"));
+    }
+
 
 
 }

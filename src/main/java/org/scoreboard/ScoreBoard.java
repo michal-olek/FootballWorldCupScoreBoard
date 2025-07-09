@@ -23,4 +23,11 @@ public class ScoreBoard {
         return scores.stream().anyMatch(score -> score.hasAnyOfTheTeamsIn(s));
     }
 
+    public void finishGame(String homeTeam, String awayTeam) {
+        boolean wasGameFinished = scores.removeIf(score -> score.getHomeTeam().equals(homeTeam) && score.getAwayTeam().equals(awayTeam));
+        if(!wasGameFinished) {
+            throw new IllegalArgumentException("The game was not started");
+        }
+    }
+
 }
