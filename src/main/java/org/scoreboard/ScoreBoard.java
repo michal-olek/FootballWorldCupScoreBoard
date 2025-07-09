@@ -2,6 +2,7 @@ package org.scoreboard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ScoreBoard {
 
@@ -26,8 +27,25 @@ public class ScoreBoard {
     public void finishGame(String homeTeam, String awayTeam) {
         boolean wasGameFinished = scores.removeIf(score -> score.getHomeTeam().equals(homeTeam) && score.getAwayTeam().equals(awayTeam));
         if(!wasGameFinished) {
-            throw new IllegalArgumentException("The game was not started");
+            throw new NoSuchElementException("The game was not started");
         }
     }
+
+
+    public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
+
+        if(homeScore < 0 || awayScore < 0) {
+            throw new IllegalArgumentException("The score must be a non negative number");
+        }
+
+        Score score = scores.stream()
+                .filter(s -> s.getHomeTeam().equals(homeTeam) && s.getAwayTeam().equals(awayTeam))
+                .findFirst().orElseThrow( () -> new NoSuchElementException("There is no such a game"));
+
+        score.setHomeScore(homeScore);
+        score.setAwayScore(awayScore);
+    }
+
+
 
 }

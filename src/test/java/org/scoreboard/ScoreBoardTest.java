@@ -2,6 +2,8 @@ package org.scoreboard;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScoreBoardTest {
@@ -54,6 +56,7 @@ class ScoreBoardTest {
     public void testFinishGame() {
         ScoreBoard sb = new ScoreBoard();
         sb.startGame("Mexico", "Germany");
+        // just to be sure that the game is actually started
         assertEquals(1, sb.scores.size());
         sb.finishGame("Mexico", "Germany");
         assertEquals(0, sb.scores.size());
@@ -64,16 +67,36 @@ class ScoreBoardTest {
     public void testIncorrectlyFinishGame() {
         ScoreBoard sb = new ScoreBoard();
         sb.startGame("Mexico", "Germany");
-        assertThrows( IllegalArgumentException.class, () ->sb.finishGame("Germany", "Mexico"));
+        assertThrows( NoSuchElementException.class, () ->sb.finishGame("Germany", "Mexico"));
         assertEquals(1, sb.scores.size());
     }
 
     @Test
     public void testFinishNonExistingGame() {
         ScoreBoard sb = new ScoreBoard();
-        assertThrows(IllegalArgumentException.class, () -> sb.finishGame("Mexico", "Germany"));
+        assertThrows(NoSuchElementException.class, () -> sb.finishGame("Mexico", "Germany"));
     }
 
+    @Test
+    public void testUpdateScore() {
+        ScoreBoard sb = new ScoreBoard();
+        sb.startGame("Mexico", "Germany");
+        sb.updateScore("Mexico", "Germany", 1, 0);
+        assertEquals(1, sb.scores.get(0).getHomeScore());
+    }
+
+    @Test
+    public void testUpdateNonExistingGame() {
+        ScoreBoard sb = new ScoreBoard();
+        assertThrows(NoSuchElementException.class, () -> sb.updateScore("Mexico", "Germany", 1, 0));
+    }
+
+    @Test
+    public void testUpdateScoreWithNegativeValue() {
+        ScoreBoard sb = new ScoreBoard();
+        sb.startGame("Mexico", "Germany");
+        assertThrows(IllegalArgumentException.class, () -> sb.updateScore("Mexico", "Germany", -1, 0));
+    }
 
 
 }

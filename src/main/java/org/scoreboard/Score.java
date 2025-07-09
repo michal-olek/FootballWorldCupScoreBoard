@@ -16,8 +16,8 @@ public class Score {
 
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        this.homeScore = 0;
-        this.awayScore = 0;
+        this.setHomeScore(0);
+        this.setAwayScore(0);
     }
 
     public String getHomeTeam() {
@@ -35,6 +35,16 @@ public class Score {
     public int getAwayScore() {
         return awayScore;
     }
+
+    public void setHomeScore(int homeScore) {
+        this.homeScore = homeScore;
+    }
+
+    public void setAwayScore(int awayScore) {
+        this.awayScore = awayScore;
+    }
+
+
 
     public boolean hasAnyOfTheTeamsIn(Score s) {
         return this.homeTeam.equals(s.getHomeTeam())
