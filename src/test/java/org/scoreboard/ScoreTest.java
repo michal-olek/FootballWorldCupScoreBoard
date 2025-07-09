@@ -16,4 +16,10 @@ class ScoreTest {
         assertEquals(0, s.getAwayScore());
     }
 
+    @Test
+    public void testNotPossibleToCreateScoreWithSameTeamOnBothSides() {
+        assertThrows(IllegalArgumentException.class, () -> new Score("Mexico", "Mexico"));
+    }
+
+
 }
