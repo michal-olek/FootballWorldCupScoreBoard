@@ -13,7 +13,7 @@ public class ScoreBoard {
     public static String GAME_NOT_STARTED = "The game was not started";
     public static String SCORE_NOT_NON_NEGATIVE = "The score must be a non negative number";
 
-    List<Score> scores;
+    private final List<Score> scores;
 
     public ScoreBoard() {
         scores = new ArrayList<>();
@@ -69,6 +69,9 @@ public class ScoreBoard {
 
     }
 
+    public int getNumberOfGames() {
+        return scores.size();
+    }
 
 }
 
