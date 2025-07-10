@@ -2,6 +2,9 @@ package org.scoreboard;
 
 public class Score {
 
+    public static final String TEAM_NAME_NOT_PROVIDED = "Team name not provided";
+    public static final String TEAM_NAMES_MUST_BE_DIFFERENT = "Team names must be different";
+
     private final String homeTeam;
     private final String awayTeam;
 
@@ -10,8 +13,12 @@ public class Score {
 
     public Score(String homeTeam, String awayTeam) {
 
+        if(homeTeam.isBlank() || awayTeam.isBlank()) {
+            throw new IllegalArgumentException(TEAM_NAME_NOT_PROVIDED);
+        }
+
         if(homeTeam.equals(awayTeam)) {
-            throw new IllegalArgumentException("You cannot start a game with the same team");
+            throw new IllegalArgumentException(TEAM_NAMES_MUST_BE_DIFFERENT);
         }
 
         this.homeTeam = homeTeam;
@@ -52,6 +59,5 @@ public class Score {
                 || this.awayTeam.equals(s.getAwayTeam())
                 || this.awayTeam.equals(s.getHomeTeam());
     }
-
 
 }

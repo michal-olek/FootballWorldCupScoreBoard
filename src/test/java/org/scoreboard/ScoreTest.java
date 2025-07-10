@@ -18,8 +18,14 @@ class ScoreTest {
 
     @Test
     public void testNotPossibleToCreateScoreWithSameTeamOnBothSides() {
-        assertThrows(IllegalArgumentException.class, () -> new Score("Mexico", "Mexico"));
+        Exception e = assertThrows(IllegalArgumentException.class, () -> new Score("Mexico", "Mexico"));
+        assertEquals(Score.TEAM_NAMES_MUST_BE_DIFFERENT, e.getMessage());
     }
 
+    @Test
+    public void testNotPossibleToCreateScoreWithBlankTeamName() {
+        Exception e = assertThrows(IllegalArgumentException.class, () -> new Score(" ", "Germany"));
+        assertEquals(Score.TEAM_NAME_NOT_PROVIDED, e.getMessage());
+    }
 
 }
